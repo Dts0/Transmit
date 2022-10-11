@@ -10,6 +10,7 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QRadioButton>
+#include <QTextEdit>
 
 class RadioButton : public QRadioButton
 {
@@ -29,6 +30,7 @@ class Widget : public QWidget
     Q_OBJECT
 
 public:
+    void appendLog(QString &logStr);
     Widget(QWidget *parent = 0);
     ~Widget();
 private:
@@ -59,6 +61,8 @@ private:
     QVector<RadioButton*> radios;
 
     QPushButton *open_btn;
+
+    QTextEdit   *log;
 
     QVector<int> fifo;
 };

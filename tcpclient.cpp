@@ -1,4 +1,5 @@
 #include "tcpclient.h"
+#include "widget.h"
 #include <QCoreApplication>
 #include <QTime>
 
@@ -26,12 +27,34 @@ void TcpClient::Close()
 
 void TcpClient::handleReadyRead()
 {
-    emit sig_recv_data(socket->readAll());
+    Widget* wid = (Widget*)parent();
+    QByteArray data = socket->readAll();
+    QString    logString  = "";
+
+    logString = "TCPC" + socket->peerAddress().toString() + ":" + socket->peerPort();
+    logString += QString::asprintf(" read(%d):", data.size());
+    for(int i = 0; i < data.size(); i++)
+    {
+        logString += QString::asprintf("%02X ", (unsigned char)data.at(i));
+    }
+    logString += "\n";
+    wid->appendLog(logString);
+    emit sig_recv_data(data);
 }
 
 void TcpClient::slot_send_data(QByteArray hex)
 {
+    Widget* wid = (Widget*)parent();
     if(socket->state() == QAbstractSocket::ConnectedState) {
+        QString    logString  = "";
+        logString = "TCPC" + socket->peerAddress().toString() + ":" + socket->peerPort();
+        logString += QString::asprintf(" write(%d):", hex.size());
+        for(int i = 0; i < hex.size(); i++)
+        {
+            logString += QString::asprintf("%02X ", (unsigned char)hex.at(i));
+        }
+        logString += "\n";
+        wid->appendLog(logString);
         socket->write(hex);
         socket->flush();
     }

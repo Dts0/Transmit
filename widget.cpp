@@ -15,6 +15,10 @@ Widget::~Widget()
 {
 
 }
+void Widget::appendLog(QString& logStr)
+{
+    log->append(logStr);
+}
 
 void Widget::initView()
 {
@@ -87,6 +91,7 @@ void Widget::initView()
 
 
     open_btn = new QPushButton("打开",this);
+    log      = new QTextEdit(this);
     QVBoxLayout *vLayout = new QVBoxLayout;
     vLayout->addLayout(hLayout1);
     vLayout->addLayout(hLayout2);
@@ -95,6 +100,7 @@ void Widget::initView()
     vLayout->addLayout(hLayout5);
     vLayout->addLayout(hLayout6);
     vLayout->addWidget(open_btn);
+    vLayout->addWidget(log);
     setLayout(vLayout);
 
     BaseParent *serial1 = new SerialPort(this);
