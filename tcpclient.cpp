@@ -31,7 +31,7 @@ void TcpClient::handleReadyRead()
     QByteArray data = socket->readAll();
     QString    logString  = "";
 
-    logString = "TCPC" + socket->peerAddress().toString() + ":" + socket->peerPort();
+    logString = "TCPC" + socket->peerAddress().toString() + ":" + QString::number(socket->peerPort());
     logString += QString::asprintf(" read(%d):", data.size());
     for(int i = 0; i < data.size(); i++)
     {
@@ -47,7 +47,7 @@ void TcpClient::slot_send_data(QByteArray hex)
     Widget* wid = (Widget*)parent();
     if(socket->state() == QAbstractSocket::ConnectedState) {
         QString    logString  = "";
-        logString = "TCPC" + socket->peerAddress().toString() + ":" + socket->peerPort();
+        logString = "TCPC" + socket->peerAddress().toString() + ":" + QString::number(socket->peerPort());
         logString += QString::asprintf(" write(%d):", hex.size());
         for(int i = 0; i < hex.size(); i++)
         {

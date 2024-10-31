@@ -115,6 +115,8 @@ void Widget::initView()
     bases.append(server2);
     bases.append(client1);
     bases.append(client2);
+
+    setWindowTitle("Transmit V241031");
 }
 
 void Widget::connections()
